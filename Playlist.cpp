@@ -14,9 +14,7 @@ char Playlist::option = 'N';
 
 void Playlist::addSong(Song& s1)
 {
-  
   lsong.push_back(s1);
-
 }
 
 void Playlist::deleteSong(Song& deletesong){
@@ -37,7 +35,7 @@ std::vector<Song> Playlist::getSong(){
     return lsong;
 }
 
-void Playlist::intersect(Playlist& p2){
+Playlist Playlist::intersect(Playlist& p2){
     
     Playlist result;
     bool valid;
@@ -55,7 +53,7 @@ void Playlist::intersect(Playlist& p2){
            result.addSong(lsong[i]);
         }  
       }
-      //return result;
+      return result;
     }
 
 bool Playlist::search(vector<Song> b, Song& g   ) 
@@ -86,15 +84,40 @@ Playlist operator+(Playlist& p1, Playlist& p2)
     }
     return Playlist(merge);
 }
+Playlist operator+(Playlist& p1, Song& s1)
+{
+  Playlist a1;
+  a1 = p1;
+  a1.addSong(s1);
+  return Playlist(a1);
+   
+}
+
+Playlist operator-(Playlist& p1, Song& s1){
+    Playlist d1;
+    d1 = p1;
+    d1.deleteSong(s1);
+    return d1;
+}
+
+ostream& operator<<(ostream& os, const Playlist& p1 ){
+ for(int i=0; i< p1.lsong.size(); i++){
+     os << p1.lsong[i]; 
+ }  
+  return os;
+}
+
+
 
 void Playlist::play(){
-    
+    cout << option << currentsong << endl;
     if(option == 'N' || option == 'n'){
         currentsong++;
-          if(currentsong > lsong.size())
+          if(currentsong < lsong.size())
           cout << lsong[currentsong] << endl;
            else
-           cout << "There are no more songs to play in the plalist.";
+               
+           cout << "There are no more songs to play in the plalist." << endl;
     }
     else if(option == 'R' || option == 'r'){
         cout << lsong[currentsong] << endl;
@@ -125,16 +148,17 @@ Playlist::Playlist(std::string name){
    string play_listname = name + ".playlist";
    play_listname = StringHelper::stou(play_listname);
 
-   ifstream in;
-	in.open(play_listname.c_str());
+   fstream in;
+	in.open(play_listname.c_str(), ios::in);
     Song s;
     int k =0;
-    if(in){
-     while(in)  { 
-        in >> s;
-         cout << s << endl;
+    //if(in){
+     while(in>>s)  { 
+        //in >> s;
+       //  cout << s << endl;
         lsong.push_back(s);
      }
-    }
+    in.close();
+    //}
     //cout << lsong.size()<< endl;
 }
