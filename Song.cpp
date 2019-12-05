@@ -40,11 +40,11 @@ ostream& operator<<(ostream& os, const Song& song){
     return os;
 }
 ofstream& operator<<(ofstream& os, const Song& song){
-   os << song.title << "," << song.artist << "," << song.album << "," << song.year << "," << song.length;  //output to file
+   os << song.title << "," << song.artist << "," << song.album << "," << song.year << "," << song.length;  // output to file
     return os;
 }
 
-fstream& operator>>(fstream& is, Song& song){ //input from file
+fstream& operator>>(fstream& is, Song& song){ // input from file
     string temp;
     
     getline(is, song.title, ',');
