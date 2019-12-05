@@ -30,7 +30,7 @@ class Playlist
     void addSong(Song& );// Adding a song
     void deleteSong(Song& ); // Deleting a song
     Playlist intersect(Playlist& ); // Intersecting two playlist 
-    bool search(std::vector<Song>, Song& ); //Searching for song to delete
+    bool search(std::vector<Song>, Song& ); // Searching for song to delete
     friend Playlist operator+(Playlist& , Playlist& );
     friend Playlist operator+(Playlist& , Song& );
     friend Playlist operator-(Playlist& , Song& );
