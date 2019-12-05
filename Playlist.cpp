@@ -38,7 +38,7 @@ Playlist::Playlist(std::string name){
     int k =0;
      while(in>>s)  { 
 
-        lsong.push_back(s); // Adding a song to the vector songs.
+        lsong.push_back(s); // Adding a song to the vector songs
      }
     in.close();
 }
