@@ -1,3 +1,9 @@
+// Player.cpp
+// Kristin McGee, Tramia McGee, Jermaine Le Grand
+// December 5, 2019
+// The purpose of this program to read in songs and playlists from a file and being able to add to a playlist,
+// delete from a playlist, add a new playlist, merge a playlist, and intersect a playlist.
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -22,17 +28,19 @@ void mode_change();
     Playlist obj;
 
 int main()
-{
-    vector<songList> v_songs;
+{// Start of main.
+    vector<songList> v_songs; // Creating vector of a struct
 
-    loadPlayList(v_songs);
+    loadPlayList(v_songs); 
+    
+    Playlist obj;
     
     int choice;
     int select;
     string newplaylist;
     cout << "----------WELCOME to the AutoPlayer----------" << endl;
-    do{
-    cout << "You currently have 4 playlist(s)." << endl;
+    do{ //start of the main do loop
+    //cout << "You currently have 4 playlist(s)." << endl;
     
     do{
     cout << "1 - Open an exisiting playlist" << endl;
@@ -45,7 +53,7 @@ int main()
     
     if(choice == 1){
 	 cout << "Please select a playlist from below: \n";
-	 displayPlaylists(v_songs);
+	 displayPlaylists(v_songs);// Prints all playlist
     
        do{
 	   cout << "Selection: ";
@@ -57,7 +65,7 @@ int main()
         cout << endl;
         Playlist p1(v_songs[select-1].name);
 	 
-      Menu(p1);
+      Menu(p1);// calls menu
      
     }
    else if(choice == 2)
@@ -81,10 +89,10 @@ int main()
         switch(select){
             case 1:
                 {
-                    Playlist p;
-                    p.setPName(newplaylist);
+                    Playlist p; //Create playlist object.
+                    p.setPName(newplaylist); // call set playlist name function
                     addNewPlaylist(newplaylist, v_songs);
-                    Menu(p);
+                    Menu(p); // call menu
                 }
                 break;
              case 2:
@@ -143,17 +151,18 @@ int main()
 		
 		cout << endl;
    }
-    }while(choice != 3);
+    }while(choice != 3);// end of main do loop 
 	
 	return 0;
     
-}
+}// End of main.
 
+// Displaying playlist
 void displayPlaylists(vector<songList>& v_songs){
 	for(int i =0, j = 1; i< v_songs.size(); i++, j++)
 		cout << j << " " <<  v_songs[i].name << endl;
 }
-    
+//Loading playlist and add name to pplaylist vector    
 void loadPlayList(vector<songList>& v_songs){
 	
 	ifstream in;
@@ -173,7 +182,7 @@ void loadPlayList(vector<songList>& v_songs){
 	}
 	in.close();
 }
-
+// Menu
 bool Menu(Playlist& playlist)
 {
   bool option;
@@ -205,7 +214,7 @@ bool Menu(Playlist& playlist)
 		{
             cout << endl;
 			cout << "NOW PLAYING:" << endl;
-			obj.play();
+			  obj.play();
 		}
       
       break;
@@ -228,6 +237,8 @@ bool Menu(Playlist& playlist)
   }while(choice != 'Q' && choice != 'q');
   return true;
 }
+
+//Adding a new playlist 
 void addNewPlaylist(string playlistName, vector<songList>& v_song){
 	songList list = {playlistName, StringHelper::stou(playlistName)};
 	v_song.push_back(list);
@@ -236,13 +247,15 @@ void addNewPlaylist(string playlistName, vector<songList>& v_song){
 	out << StringHelper::stou(playlistName) << endl;
 	out.close();
 }
+
+//Adding a song
 void add_Song(Playlist& playlist)
 {
   cin.ignore();
-  Song s;
+  Song s; // Create song object
   cin >> s;  
   string name = playlist.getPName();
-  name + ".playlist";
+  name + ".playlist"; 
   name = StringHelper::stou(name);
   
   playlist.addSong(s);
@@ -254,11 +267,11 @@ void add_Song(Playlist& playlist)
   
     
 }
+
+// Deleting a song
 void delete_Song(Playlist& playlist)
 {
 	cin.ignore();
-    //bool good;
-    //good = false;
 	string title, artist;
     cout << "Enter to delete: " << endl;
 	cout << "Title: ";
@@ -283,17 +296,9 @@ void delete_Song(Playlist& playlist)
        for(int i =0 ; i < temp.size(); i++)
            out << temp[i] << endl;
     
-    /*if(obj.deleteSong(delete_s))
-    good = true;
-    if(true){
-      cout << "Song successfully deleted" << endl;
-    }
-    else
-    {
-      cout << "No such song exists" << endl;
-    }*/
 }
 
+//Changing the mode
 void mode_change()
 {
   bool good; 
