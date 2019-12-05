@@ -155,7 +155,7 @@ int main()
 	
 	return 0;
     
-}// End of main.
+}// End of main
 
 // Displaying playlist
 void displayPlaylists(vector<songList>& v_songs){
