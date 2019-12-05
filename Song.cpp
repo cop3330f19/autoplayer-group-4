@@ -1,3 +1,9 @@
+// Song.cpp
+// Kristin McGee, Tramia McGee, Jermaine Le Grand
+// December 5, 2019
+// The purpose of this program to read in songs and playlists from a file and being able to add to a playlist,
+// delete from a playlist, add a new playlist, merge a playlist, and intersect a playlist.
+
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -8,6 +14,7 @@
 
 using namespace std;
 
+//Constructors
 Song::Song( ){
     title = "";
     artist = "";
@@ -29,15 +36,15 @@ void Song::set(string title, string artist, string album, int length, int year){
 }
 
 ostream& operator<<(ostream& os, const Song& song){
-    os << song.title << " " << song.artist << " " << song.album << " " << song.year << " " << song.length;
+    os << song.title << " " << song.artist << " " << song.album << " " << song.year << " " << song.length; // output to console
     return os;
 }
 ofstream& operator<<(ofstream& os, const Song& song){
-   os << song.title << "," << song.artist << "," << song.album << "," << song.year << "," << song.length;  
+   os << song.title << "," << song.artist << "," << song.album << "," << song.year << "," << song.length;  //output to file
     return os;
 }
 
-fstream& operator>>(fstream& is, Song& song){
+fstream& operator>>(fstream& is, Song& song){ //input from file
     string temp;
     
     getline(is, song.title, ',');
@@ -70,5 +77,5 @@ istream& operator>>(istream& is, Song& song){
 }
 
 bool operator==(const Song& lhs, const Song& rhs){
-    return (lhs.title == rhs.title && lhs.artist == rhs.artist);
+    return (lhs.title == rhs.title && lhs.artist == rhs.artist); // compare two song objects for equality
 }
