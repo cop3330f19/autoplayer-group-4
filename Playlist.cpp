@@ -1,3 +1,9 @@
+// Playlist.cpp
+// Kristin McGee, Tramia McGee, Jermaine Le Grand
+// December 5, 2019
+// The purpose of this program to read in songs and playlists from a file and being able to add to a playlist,
+// delete from a playlist, add a new playlist, merge a playlist, and intersect a playlist.
+
 #include <vector>
 #include <string>
 #include <iostream>
@@ -10,11 +16,11 @@
 
 using namespace std; 
 
-char Playlist::option = 'N';
+char Playlist::option = 'N'; //Setting mode to N as default
 
 void Playlist::addSong(Song& s1)
 {
-  lsong.push_back(s1);
+  lsong.push_back(s1); // Adding a new song to the end of the song vector
 }
 
 void Playlist::deleteSong(Song& deletesong){
@@ -32,7 +38,7 @@ void Playlist::deleteSong(Song& deletesong){
   }
 
 std::vector<Song> Playlist::getSong(){
-    return lsong;
+    return lsong; // Returning a song
 }
 
 Playlist Playlist::intersect(Playlist& p2){
@@ -43,7 +49,7 @@ Playlist Playlist::intersect(Playlist& p2){
     
     valid = false;
     
-   for(int i = 0; i < lsong.size(); i++){
+   for(int i = 0; i < lsong.size(); i++){// Start of for loop 
        for(int j = 0; j < temp.size(); j++){
        if(lsong[i] == temp[j] && search(result.getSong(), lsong[i]))
            
@@ -52,8 +58,8 @@ Playlist Playlist::intersect(Playlist& p2){
          
            result.addSong(lsong[i]);
         }  
-      }
-      return result;
+      }// End of for loop
+      return result;// Return a playlist
     }
 
 bool Playlist::search(vector<Song> b, Song& g   ) 
@@ -76,17 +82,17 @@ Playlist operator+(Playlist& p1, Playlist& p2)
     
     valid = false;
     
-   for(int i = 0; i < temp.size(); i++){
+   for(int i = 0; i < temp.size(); i++){ // Start of for loop 
            
          valid = true;
     
            merge.addSong(temp[i]);
-    }
+    }//End of for loop
     return Playlist(merge);
 }
 Playlist operator+(Playlist& p1, Song& s1)
 {
-  Playlist a1;
+  Playlist a1; //Creating a playlist object
   a1 = p1;
   a1.addSong(s1);
   return Playlist(a1);
@@ -94,7 +100,7 @@ Playlist operator+(Playlist& p1, Song& s1)
 }
 
 Playlist operator-(Playlist& p1, Song& s1){
-    Playlist d1;
+    Playlist d1;// Creating a playlist object
     d1 = p1;
     d1.deleteSong(s1);
     return d1;
@@ -110,17 +116,17 @@ ostream& operator<<(ostream& os, const Playlist& p1 ){
 
 
 void Playlist::play(){
-    cout << option << currentsong << endl;
-    if(option == 'N' || option == 'n'){
+    //cout << option << currentsong << endl;
+    if(option == 'N' || option == 'n'){ 
         currentsong++;
-          if(currentsong < lsong.size())
-          cout << lsong[currentsong] << endl;
-           else
+          if(currentsong < lsong.size()) // See if the current song is not at the end of the vector.
+             cout << lsong[currentsong] << endl; // Print current song using the current index it is at (currentsong)
+        else
                
-           cout << "There are no more songs to play in the plalist." << endl;
+      cout << "There are no more songs to play in the plalist." << endl;
     }
     else if(option == 'R' || option == 'r'){
-        cout << lsong[currentsong] << endl;
+        cout << lsong[currentsong] << endl; // Printing the same song
     }
     else if(option == 'L' || option == 'l'){
         currentsong++;
@@ -131,7 +137,7 @@ void Playlist::play(){
 }
 
 void Playlist::mode(char option){
-    Playlist::option = option;
+    Playlist::option = option; 
 }
 
 void Playlist::setPName(std::string pname){
@@ -152,13 +158,10 @@ Playlist::Playlist(std::string name){
 	in.open(play_listname.c_str(), ios::in);
     Song s;
     int k =0;
-    //if(in){
      while(in>>s)  { 
-        //in >> s;
-       //  cout << s << endl;
-        lsong.push_back(s);
+
+        lsong.push_back(s); // Adding a song to the vector songs.
      }
     in.close();
-    //}
-    //cout << lsong.size()<< endl;
 }
+
